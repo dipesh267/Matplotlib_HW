@@ -4,7 +4,7 @@
 1. People in Urban areas utilize ride sharing more than other areas. 67.5%
     of the ride sharing happens in urban areas. 
 2. There are more drivers in Urban Areas at almost 78%
-2. The Average fare starts to stabilize as the number of drivers increase.
+2. The Average fare in Rural areas are higher than in Urban areas mainly due to the number of rides.
 
 
 ```python
@@ -144,20 +144,16 @@ city_ride_df.head()
 
 
 ```python
-x_axis = city_ride_df['driver_count']
-data = city_ride_df['mean']
-total = city_ride_df['sum']
+x_axis = city_ride_df['count']
+average = city_ride_df['mean']
+d_count = city_ride_df['driver_count']
 
-plt.figure(figsize=(15,8))
-plt.scatter(x_axis, data, marker='o', facecolor='Blue', edgecolors='black', sizes=total, alpha=0.75)
-#plt.scatter(x_axis, data, marker='o',c=city_ride_df['sum'], s=city_ride_df['count'],cmap='viridis', sizes=data*10, alpha=0.75)
+sns.lmplot(x='count',y='mean',data=city_ride_df, hue='type', fit_reg=False, scatter_kws={'s': d_count*3, 'edgecolors':'black'})
 
-data = city_ride_df['count']
-plt.scatter(x_axis, data, marker='o', facecolor='Green', edgecolors='black', sizes=total, alpha=0.75)
-
+#sns.boxplot
 plt.title('Total Drivers Compared to Average Fare and Number of Rides')
 plt.xlabel("Number of Drivers")
-plt.legend(['Average Fare/City','Total Fare/City'])
+plt.ylabel('Average Fare ($)')
 plt.show()
 ```
 
@@ -202,9 +198,6 @@ plt.show()
 grouped_rides_by_type = grouped_by_type['count'].sum()
 grouped_rides_by_type = grouped_rides_by_type.reset_index()
 
-#print(grouped_rides_by_type)
-#print(grouped_by_type.head())
-
 pie_labels = grouped_rides_by_type['type']
 pie_data = grouped_rides_by_type['count']
 
@@ -229,9 +222,6 @@ plt.show()
 ```python
 grouped_drivers_by_type = grouped_by_type['driver_count'].sum()
 grouped_drivers_by_type = grouped_drivers_by_type.reset_index()
-
-#print(grouped_rides_by_type)
-#print(grouped_by_type.head())
 
 pie_labels = grouped_drivers_by_type['type']
 pie_data = grouped_drivers_by_type['driver_count']
